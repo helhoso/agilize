@@ -30,6 +30,20 @@
 	banco: id6951306_industry
 	usuario: id6951306_admin
 	senha: admin12345@
+	
+	* Checa se eh um "POST"
+	* if POST
+	*     faz o que o 'logar.php' faz hoje
+	*     qdo terminar de faszer o q o logar.php faz hoje, redireciona o user para index.php
+	* else
+	* {
+	* 	Checa session pra ver se usuario ta logado
+	* 	if logado
+	*      mostra menu
+	* 	else  
+	*      mostra tela de login
+    *      o form da tela de login faz "POST" pra index.php
+	* }
 */	
 
   
@@ -38,13 +52,75 @@
   
 
   // require 'conection/conn.php' ;
-
-		echo( ' >> ' . $_SESSION['IdUser'] . '</br>');
-		echo( ' >> ' . $_SESSION['NameUser'] . '</br>');
-  exit;
-  if( isset($_SESSION['IdUser']) && !empty($_SESSION['IdUser']) ):
+	session_start();
+	/*
+	echo( ' >> ' . $_SESSION['IdUser'] . '</br>');
+	echo( ' >> ' . $_SESSION['NameUser'] . '</br>');
+	*/
+  //exit;
+  if( empty($_SESSION['IdUser']) ):
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>AGILIZE CALL CENTER</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+
+
+
+
+</head>
+<body style="height:1500px">
+<div id="login" class="container">
+  <div class="row-fluid">
+    <div class="span4"> <!-- vai de 2 a 12  -->
+      <div class="login well well-small">
+        <div class="text-center">
+          <img src="images/login.png" alt="logo"> 
+        </div>
+        <form action="users/login/logar.php" style="" class="login-form text-center" id="UserLoginForm" method="post" accept-charset="utf-8">
+          <div class="control-group">
+            <div class="input-prepend">
+              <span class="add-on"><i class="icon-user"></i></span>
+              <input name="UserUsername" required="required" placeholder="Username" maxlength="255" type="text" id="UserUsername"> 
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="input-prepend">
+              <span class="add-on"><i class="icon-lock"></i></span>
+              <input name="UserPassword" required="required" placeholder="Password" type="password" id="UserPassword"> 
+            </div>
+          </div>
+          <div class="control-group">
+            <label id="remember-me">
+              <input type="checkbox" name="data[User][remember_me]" value="1" id="UserRememberMe"> Lembra ?</label>
+          </div>
+          <div class="control-group">
+            <input class="btn btn-primary btn-large" style="width:250px" type="submit" value="Entrar"> 
+          </div>
+        </form>
+      </div><!--/.login-->
+    </div><!--/.span12-->
+  </div><!--/.row-fluid-->
+</div><!--/.container-->
+</body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</html>
+<?php
+ // if( isset($_SESSION['IdUser']) && !empty($_SESSION['IdUser']) ):
+ // else: header('location: users/login/index.html' ); endif;
+ else: 
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,5 +169,7 @@
 </html>
 
 <?php
- else: header('location: users/login/index.html' ); endif;
+ // if( isset($_SESSION['IdUser']) && !empty($_SESSION['IdUser']) ):
+ // else: header('location: users/login/index.html' ); endif;
+	endif; 
 ?>
