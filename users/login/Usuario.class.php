@@ -5,9 +5,10 @@
 		function login($email,$senha){
 			global $pdo;
 			
-			include_once('../../conection/conn.php');
+			// include_once('../../conection/conn.php');
+			include_once('conection/conn.php');
 
-			$sql = "SELECT id, nome, telefone, email, cnpj, excluido FROM colaborador WHERE (email= :email OR telefone= :email ) AND senha= :senha"	;
+			// $sql = "SELECT id, nome, telefone, email, cnpj, excluido FROM colaborador WHERE (email= :email OR telefone= :email ) AND senha= :senha"	;
 			$sql = "SELECT id, nome, telefone, email, cnpj, excluido FROM colaborador WHERE email= :email AND senha= :senha"	;
 			/*
 				echo $email .'</br>' ;
@@ -46,6 +47,23 @@
 			}
 		}
 
+		function logout($UserID){
+			// echo ($UserID .'       c</br>') ;
+			global $pdo;
+			
+			//include_once('../../conection/conn.php');
+			include_once('../../conection/conn.php');
+			$sth2 = $pdo->prepare( "UPDATE acesso SET saida = now() WHERE colaborador_id = :UserID " );
+			if ($sth2) {
+				$sth2->bindValue( 'UserID' , $UserID );
+				$sth2->execute();
+				echo "Record Updated:";
+				echo $sth2->affected_rows;
+			}else{
+				echo $connection->error;
+			}
+			return null ;
+		}
 	}
 
 ?>

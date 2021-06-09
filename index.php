@@ -5,6 +5,8 @@
 
 
 	Hostinger - https://www.hostinger.com/
+	https://www.hostinger.com/cpanel-login
+	
 	https://play.google.com/apps/publish/signup/
 	http://explore.appinventor.mit.edu/app-building-guides#
 	
@@ -56,7 +58,14 @@
 	echo( ' >> ' . $_SESSION['NameUser'] . '</br>');
 	*/
 	//exit;
-	if( empty($_SESSION['IdUser']) ):
+
+	$userUser = $_POST['UserUsername'];
+	$userPass = $_POST['UserPassword'];
+	
+	//echo( $userUser . '</br>');
+	//echo( $userPass . '</br>');
+	
+	if( empty($userUser) || empty($userPass) ):
 
 ?>
 <!DOCTYPE html>
@@ -70,9 +79,6 @@
   
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 
-
-
-
 </head>
 <body style="height:1500px">
 <div id="login" class="container">
@@ -82,7 +88,7 @@
         <div class="text-center">
           <img src="images/login.png" alt="logo"> 
         </div>
-        <form action="users/login/logar.php" style="" class="login-form text-center" id="UserLoginForm" method="post" accept-charset="utf-8">
+        <form action="index.php" style="" class="login-form text-center" id="UserLoginForm" method="post" accept-charset="utf-8">
           <div class="control-group">
             <div class="input-prepend">
               <span class="add-on"><i class="icon-user"></i></span>
@@ -113,12 +119,26 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 </html>
-<?php
- // if( isset($_SESSION['IdUser']) && !empty($_SESSION['IdUser']) ):
- // else: header('location: users/login/index.html' ); endif;
- else: 
-?>
 
+<?php
+	else: 
+
+	// || empty($_SESSION['IdUser'])
+	$userUser = $_POST['UserUsername'];
+	$userPass = $_POST['UserPassword'];
+
+	if( empty($userUser) || empty($userPass) ){
+		header('location: index.php' ) ;
+	}
+
+	require 'users/login/Usuario.class.php' ;
+	$usuario = new Usuario();
+
+	if( ! $usuario->login($userUser,$userPass) ){
+		header('location: index.php' ) ;
+	}	
+	
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -142,7 +162,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="#">Abrir tarefa</a>
+          <a class="nav-link" href="abrir_tarefa.php">Abrir tarefa</a>
         </li>
         <li class="nav-item">
           <!-- a class="nav-link" href="#">Sair</a -->
@@ -154,8 +174,6 @@
         </div>
 
     </div>
-
-
 
   </div>
 </nav>

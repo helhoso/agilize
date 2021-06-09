@@ -24,7 +24,7 @@
 	require 'Usuario.class.php' ;
 	$usuario = new Usuario();
 
-	if( $usuario->login($userUser,$userPass) ){
+	if( ! $usuario->login($userUser,$userPass) ){
 		/*
 		echo( $_SESSION['IdUser']    . '</br>');
 		echo( $_SESSION['NameUser']  . '</br>');
