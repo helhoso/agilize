@@ -25,12 +25,14 @@
 	$usuario = new Usuario();
 
 	if( $usuario->login($userUser,$userPass) ){
+		/*
 		echo( $_SESSION['IdUser']    . '</br>');
 		echo( $_SESSION['NameUser']  . '</br>');
 		echo( $_SESSION['emailUser'] . '</br>');
 		echo( $_SESSION['foneUser']  . '</br>');
 		echo( $_SESSION['CNPJUser']  . '</br>');
 		//exit;
+		*/
 	}
 	header('location: ../../index.php' ) ;
 	//exit;
