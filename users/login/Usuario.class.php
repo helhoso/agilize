@@ -53,7 +53,7 @@
 			
 			//include_once('../../conection/conn.php');
 			include_once('../../conection/conn.php');
-			$sth2 = $pdo->prepare( "UPDATE acesso SET saida = now() WHERE colaborador_id = :UserID " );
+			$sth2 = $pdo->prepare( "UPDATE acesso SET saida = now() WHERE colaborador_id = :UserID AND saida IS null" );
 			if ($sth2) {
 				$sth2->bindValue( 'UserID' , $UserID );
 				$sth2->execute();

@@ -137,6 +137,7 @@
 	if( ! $usuario->login($userUser,$userPass) ){
 		header('location: index.php' ) ;
 	}	
+
 	
 ?>
 
@@ -162,7 +163,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="abrir_tarefa.php">Abrir tarefa</a>
+          <!-- a class="nav-link" href="abrir_tarefa.php">Abrir tarefa</a -->
+		  <button type="button" class="btn btn-outline-primary" onclick="myAbrir(<?php echo("'".$userUser ."','". $userPass."'"); ?>)">Abrir Tarefa</button>
         </li>
         <li class="nav-item">
           <!-- a class="nav-link" href="#">Sair</a -->
@@ -170,18 +172,94 @@
       </ul>
 
         <div class="form-inline my-2 my-lg-0" >
-           <a class="nav-link" href="users/login/logout.php">Sair</a>
+           <!-- a class="nav-link" href="users/login/logout.php">Sair</a -->
+		   <a href="users/login/logout.php" class="btn btn-outline-primary">Sair</a>
+		   <!-- button type="button" class="btn btn-outline-primary" href="users/login/logout.php">Sair</button -->
         </div>
 
     </div>
 
   </div>
 </nav>
+</nav>
 
+<div class="span6">
+	<div id="empresas"></div>
+</div>
+<div class="span6">
+	<div id="scripts"></div>
+</div>
+</br>
+<div class="span6">
+	<div id="texto">
+	</div>
+</div>
+
+</br>
+<div class="span6">
+	<div id="customer">
+	</div>
+</div>
 
 </body>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<script>
+		function myAbrir(pp,pp2) {
+			document.getElementById("scripts").innerHTML = '';
+			document.getElementById("texto").innerHTML = '';
+			document.getElementById("customer").innerHTML = '';
+			url = "abrir_tarefa.php?p1="+ <?php echo( $_SESSION['IdUser'] ); ?>  ;
+			$.get(url, function(resposta){
+				document.getElementById("empresas").innerHTML = resposta ;
+			});
+		}
+		function myFechar() {
+		  document.getElementById("empresas").innerHTML = '';
+		}
+		function myEmpresas(){
+			var selecionado = document.getElementById("empress").value;
+			url = "abrir_script.php?p1="+ <?php echo( $_SESSION['IdUser'] ); ?> ;
+			url = url  + "&p2=" + selecionado ;
+			$.get(url, function(resposta){
+				document.getElementById("scripts").innerHTML = resposta ;
+				document.getElementById("texto").innerHTML = '';
+				document.getElementById("customer").innerHTML = '';
+			});
+		}
+		function myScripts(){
+			var selecionado = document.getElementById("scriptss").value;
+			document.getElementById("texto").innerHTML = "<textarea class='form-control' name='texto1' id='texto1' rows='3' disabled>"+ selecionado +"</textarea>" ;
+			url = "abrir_customer.php?p1="+ <?php echo( $_SESSION['IdUser'] ); ?> ;
+			url = url  + "&p2=" + selecionado ;
+			$.get(url, function(resposta){
+				document.getElementById("customer").innerHTML = resposta ;
+			});
+		}
+		function myGetCliente(iv){
+			if(iv==''){
+				exit;
+			}
+			url = "abrir_cliente.php?p1="+ <?php echo( $_SESSION['IdUser'] ); ?> ;
+			url = url  + "&p2=" + iv ;
+			$.get(url, function(resposta){
+				document.getElementById("customer").innerHTML = resposta ;
+			});
+		}
+		function myRegistro(){
+			if(iv==''){
+				exit;
+			}
+			url = "abrir_registro.php?p1="+ <?php echo( $_SESSION['IdUser'] ); ?> ;
+			url = url  + "&p2=" + iv ;
+			$.get(url, function(resposta){
+				document.getElementById("customer").innerHTML = resposta ;
+			});
+		}
+	</script>
+
+
 </html>
 
 <?php

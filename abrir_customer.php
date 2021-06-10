@@ -4,7 +4,7 @@
 	if( empty($UserId) ){
 		exit;
 	}
-	header('location: tarefa/tarefa_abrir.php?pId=' .$UserId )
+	header('location: tarefa/customer_abrir.php?pId=' .$UserId )
 
 
 ?>
