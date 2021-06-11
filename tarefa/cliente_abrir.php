@@ -12,12 +12,37 @@
 
 	$sql = "SELECT c.id, c.nome, c.telefone, c.email, c.tipodocumento, c.numerodocumento FROM cliente c 
 	WHERE 1=1 AND c.telefone= :id_c1 OR c.email= :id_c2 OR numerodocumento= :id_c3 AND c.excluido=2" ;
+
+
+	$sql= 'SELECT 
+			c.id, 
+			c.nome, 
+			c.telefone, 
+			c.email, 
+			c.tipodocumento, 
+			c.numerodocumento,
+			u.id,
+			u.nome,
+			e.colaborador_id
+	FROM cliente c, colaborador u, colaborador_empresa e
+	WHERE 1=1 
+	AND (
+		c.telefone= :id_c1 
+		OR c.email= :id_c2 
+		OR numerodocumento= :id_c3 
+		)
+	AND u.id= :id_c4
+	AND e.colaborador_id=u.id
+	AND c.excluido=2
+	AND u.excluido=2' ;
+	
 	//echo( $sql .'</br>');
 	//echo( $UserId .' = UserId</br>');
 	$sth = $pdo->prepare($sql);
 	$sth->bindValue('id_c1'   ,$CliDoc);
 	$sth->bindValue('id_c2'   ,$CliDoc);
 	$sth->bindValue('id_c3'   ,$CliDoc);
+	$sth->bindValue('id_c4'   ,$UserId);
 	$sth->execute();
 	//echo( $sth->rowCount() .' = rowCount</br>'); 
 	if( $sth->rowCount()>0 ){
@@ -57,4 +82,4 @@
 ?>
 
 </br>
-<input type='button' value='Registrar'/>
+<input type='button' value='Registrar' onclick='myRegistro()'/>
